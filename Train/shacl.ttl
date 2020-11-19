@@ -1,0 +1,583 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix dash: <http://datashapes.org/dash#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dmop: <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owl> .
+
+#The prefix for PHT specific data; this should be changed later on.
+@prefix pht: <https://github.com/LaurenzNeumann/PHTMetadata#> .
+
+pht:TrainShape
+    a sh:NodeShape ;
+    sh:targetClass pht:Train ;
+    rdfs:comment "A Train as a static blueprint in the PHT." ;
+    sh:property [
+        sh:path pht:creator ;
+        sh:name "Train creator" ;
+        sh:class foaf:Agent ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:publisher ;
+        sh:name "Train publisher" ;
+        sh:class foaf:Agent ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:identifier ;
+        sh:name "Train identifier" ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:source ;
+        sh:name "Train source" ;
+    ] ;
+    sh:property [
+        sh:path pht:description ;
+        sh:name "Train description" ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path pht:title ;
+        sh:name "Train title" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:version ;
+        sh:name "Version" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:published ;
+        sh:name "Publication date" ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:certificate ;
+        sh:name "Certificate" ;
+        sh:description "One or more certificates providing additional trust in the train" ;
+        sh:class pht:Certificate ;
+    ] ; 
+    sh:property [
+        sh:path pht:execution ;
+        sh:name "Train Execution" ;
+        sh:description "An execution of the train" ;
+        sh:class pht:TrainExecution ;
+        sh:minCount 0 ;
+    ] ;
+    sh:property [
+        sh:path pht:model ;
+        sh:name "Model" ;
+        sh:description "A model containing a programm executed on the station" ;
+        sh:class pht:Model ;
+        sh:minCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+# Certificate
+
+pht:CertificateShape
+    a sh:NodeShape ;
+    sh:targetClass pht:Certificate ;
+    rdfs:comment "A certificate object for a PHT-Train" ;
+    sh:property [
+        sh:path pht:certificateData ;
+        sh:name "Certificate Data" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:certificateIssuer ;
+        sh:name "Certificate Issuer" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:certificateBegins ;
+        sh:name "Beginning date of certificate validity" ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:certificateEnd ;
+        sh:name "Ending date of certificate validity" ;
+        sh:datatype xsd:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+# Model
+
+pht:ModelShape
+    a sh:NodeShape ;
+    sh:targetClass pht:Model ;
+    sh:property [
+        sh:path pht:identifier ;
+        sh:name "Model identifier" ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:creator ;
+        sh:name "Model Creator" ;
+        sh:class foaf:Agent ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:description ;
+        sh:name "Model rights" ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path pht:description ;
+        sh:name "Model description" ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path pht:size ;
+        sh:name "Model size" ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:license ;
+        sh:name "License" ;
+        # SWO has a weird naming scheme:
+        sh:class <http://www.ebi.ac.uk/swo/SWO_0000002>;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:characteristic ;
+        sh:name "Model characteristics" ;
+        sh:class dmop:AlgorithmCharacteristic ;
+
+    ] ;
+    sh:property [
+        sh:path pht:preProcessingAlgorithm ;
+        sh:name "Preprocessing Algorithms" ;
+        sh:description "In model used pre processing algorithms" ;
+        sh:class dmop:Algorithm ;
+
+    ] ;
+    sh:property [
+        sh:path pht:algorithm ;
+        sh:name "In model used algorithms" ;
+        sh:class dmop:Algorithm ;
+
+    ] ;
+    sh:property [
+        sh:path pht:dataInteractionRead ;
+        sh:name "Model Data Interaction: Read" ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:dataInteractionWrite ;
+        sh:name "Model Data Interaction: Write" ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:dataInteractionDelete ;
+        sh:name "Model Data Interaction: Delete" ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:usedAccessProtocol ;
+        sh:name "Model used access Protocol" ; 
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:expectedDataSet ;
+        sh:name "Model Expected Data Set" ;
+        sh:or (
+            [ 
+                sh:class pht:ExpectedTabularDataSet ;
+            ]
+            [
+                sh:class pht:ExpectedFileDataSet ;
+            ]
+        )
+    ] ;
+    sh:property [
+        sh:path pht:minimumEstimatedGFLOPS ;
+        sh:name "Model minimum needed estimated GFLOPS" ;
+        sh:datatype xsd:float ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:needCUDASupport ;
+        sh:name "Model need CUDA support" ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+# TrainExecution
+
+pht:TrainExecutionShape 
+    a sh:NodeShape ; 
+    sh:targetClass pht:TrainExecution ;
+    sh:property [
+        sh:path pht:identifier ;
+        sh:name "Execution identifier" ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:trainId ;
+        sh:name "Train identifier" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:description ;
+        sh:name "Execution description" ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path pht:creator ;
+        sh:name "Execution Creator" ;
+        sh:class foaf:Agent ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:enableEvent ;
+        sh:name "Enabled Events for this execution" ;
+        sh:in ( pht:StartedRunningStationEvent pht:StartedTransmissionToStationEvent pht:FinishedTransmissionToStationEvent pht:MemoryUsageReportEvent pht:CpuUsageReportEvent pht:StationErrorEvent pht:StationRejectedEvent pht:StationLogEvent) ;
+        sh:qualifiedValueShapesDisjoint true ;
+    ] ;
+    sh:property [
+        sh:path pht:state ;
+        sh:name "Current state of the train" ;
+        sh:in ( pht:trainStateIdle pht:trainStateTransmission pht:trainStateWaiting pht:trainStateRunning pht:trainStateFailed pht:trainStateFinished) ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:event ;
+        sh:name "List of events of the execution" ;
+        sh:or (
+                [ 
+                    sh:class pht:StartedRunningStationEvent ;
+                ] 
+                [ 
+                    sh:class pht:StartedTransmissionToStationEvent ;
+                ] 
+                [ 
+                    sh:class pht:FinishedTransmissionToStationEvent ; 
+                ] 
+                [ 
+                    sh:class pht:MemoryUsageReportEvent ; 
+                ] 
+                [ 
+                    sh:class pht:CpuUsageReportEvent ; 
+                ] 
+                [ 
+                    sh:class pht:StationErrorEvent ;
+                ] 
+                [ 
+                    sh:class pht:StationRejectedEvent ;
+                ] 
+                [ 
+                    sh:class pht:StationLogEvent ;
+                ]
+                [
+                    sh:class pht:FinishedTransmissionEvent ;
+                ]
+                [
+                    sh:class pht:FinishedRunningAtStationEvent ;
+                ]
+        ) ;
+    ] ;
+    sh:property [
+        sh:path pht:plannedRouteStep ;
+        sh:name "Steps of the planned route" ;
+        sh:class pht:ExecutionPlanStep ;
+        sh:minCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:dispatchingPattern ;
+        sh:name "Dispatching Pattern" ;
+        sh:in ( pht:trainDispatchingPatternParallel
+                pht:trainDispatchingPatternLinear 
+                pht:TrainDispatchingPatternMixed ) ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:public ;
+        sh:name "Is execution public" ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:ExecutionPlanStepShape 
+    a sh:NodeShape ; 
+    sh:targetClass pht:ExecutionPlanStep ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "Station of the step" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:description ;
+        sh:name "Step description" ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path pht:stepNumber ;
+        sh:name "Index of the plan step" ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:dataSet ;
+        sh:name "DataSet of the station that should be used" ;
+    ] ;
+    sh:property [
+        sh:path pht:model ;
+        sh:name "Model that should be used in this plan step" ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+# Events
+
+pht:ExecutionEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:ExecutionEvent ;
+    sh:property [
+        sh:path pht:timestamp ;
+        sh:name "The timestamp when the event happend" ;
+        sh:datatype xsd:datetime ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:TrainInstantiatedEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:TrainIstantiatedExecutionEvent ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:StartedRunningEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:StartedRunningEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station on which the execution started" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:StartedTransmissionEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:StartedTransmissionEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station to which the transmission started" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:FinishedTransmissionEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:FinishedTransmissionEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station to which the transmission finished" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+
+pht:MemoryUsageReportEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:MemoryUsageReportEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station at which the train runs" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:value ;
+        sh:name "The memory usage in Megabyte" ;
+        sh:datatype xsd:float ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:CPUUsageReportEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:CPUUsageReportEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station at which the train runs" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:value ;
+        sh:name "The CPU usage in percent" ;
+        sh:datatype xsd:integer ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:StationErrorEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:StationErrorEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station at which the train did run" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:message ;
+        sh:name "The error message" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:StationRejectedEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:StationRejectedEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station in question" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:message ;
+        sh:name "The reason for rejection" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:FinishedRunningAtStationEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:FinishedRunningAtStationEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station in question" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:success ;
+        sh:name "Success" ;
+        sh:description "Did the execution had success?" ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:StationLogEventShape
+    a sh:NodeShape ;
+    sh:targetClass pht:StationLogEvent ;
+    sh:property [
+        sh:path pht:station ;
+        sh:class pht:Station ;
+        sh:name "The station at which the train runs" ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:message ;
+        sh:name "The log message" ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+# Data
+
+pht:ExpectedTabularDataSetShape
+    a sh:NodeShape ;
+    sh:targetClass pht:ExpectedTabularDataSet ;
+    sh:property [
+        sh:path pht:dataFormat ;
+        sh:name "Specifying the Data Format further" ;
+        sh:class dmop:DataFormat ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:property [
+        sh:path pht:dataFormat ;
+        sh:name "Specifying the Data Format further" ;
+        sh:class pht:TabularDataSetAttribute ;
+        sh:minCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
+
+pht:ExpectedFileDataSetShape
+    a sh:NodeShape ;
+    sh:targetClass pht:ExpectedFileDataSet ;
+    sh:property [
+        sh:path pht:dataFormat ;
+        sh:name "Specifying the file format" ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:maxCount 1 ;
+    ] ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) .
