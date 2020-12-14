@@ -264,7 +264,7 @@ pht:TrainExecutionShape
     sh:property [
         sh:path pht:enableEvent ;
         sh:name "Enabled Events for this execution" ;
-        sh:in ( pht:StartedRunningStationEvent pht:StartedTransmissionToStationEvent pht:FinishedTransmissionToStationEvent pht:MemoryUsageReportEvent pht:CpuUsageReportEvent pht:StationErrorEvent pht:StationRejectedEvent pht:StationLogEvent) ;
+        sh:in ( pht:TrainIstantiatedEvent pht:StartedRunningStationEvent pht:StartedTransmissionToStationEvent pht:FinishedTransmissionToStationEvent pht:MemoryUsageReportEvent pht:CpuUsageReportEvent pht:StationErrorEvent pht:StationRejectedEvent pht:StationLogEvent) ;
         sh:qualifiedValueShapesDisjoint true ;
     ] ;
     sh:property [
@@ -278,13 +278,10 @@ pht:TrainExecutionShape
         sh:name "List of events of the execution" ;
         sh:or (
                 [ 
-                    sh:class pht:StartedRunningStationEvent ;
-                ] 
+                    sh:class pht:TrainIstantiatedEvent ;
+                ]
                 [ 
-                    sh:class pht:StartedTransmissionToStationEvent ;
-                ] 
-                [ 
-                    sh:class pht:FinishedTransmissionToStationEvent ; 
+                    sh:class pht:StartedRunningAtStationEvent ;
                 ] 
                 [ 
                     sh:class pht:MemoryUsageReportEvent ; 
@@ -303,6 +300,9 @@ pht:TrainExecutionShape
                 ]
                 [
                     sh:class pht:FinishedTransmissionEvent ;
+                ]
+                [
+                    sh:class pht:StartedTransmissionEvent ;
                 ]
                 [
                     sh:class pht:FinishedRunningAtStationEvent ;
@@ -383,13 +383,13 @@ pht:ExecutionEventShape
 
 pht:TrainInstantiatedEventShape
     a sh:NodeShape ;
-    sh:targetClass pht:TrainIstantiatedExecutionEvent ;
+    sh:targetClass pht:TrainIstantiatedEvent ;
     sh:closed true ;
     sh:ignoredProperties ( rdf:type ) .
 
-pht:StartedRunningEventShape
+pht:StartedRunningAtStationEventShape
     a sh:NodeShape ;
-    sh:targetClass pht:StartedRunningEvent ;
+    sh:targetClass pht:StartedRunningAtStationEvent ;
     sh:property [
         sh:path pht:station ;
         sh:class pht:Station ;
