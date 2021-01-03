@@ -163,7 +163,7 @@ pht:ModelShape
         sh:maxCount 1 ;
     ] ;
     sh:property [
-        sh:path pht:characteristic ;
+        sh:path pht:modelCharacteristic ;
         sh:name "Model characteristics" ;
         sh:class dmop:AlgorithmCharacteristic ;
 
@@ -242,6 +242,7 @@ pht:TrainExecutionShape
     sh:property [
         sh:path pht:identifier ;
         sh:name "Execution identifier" ;
+        sh:description "An identifier for this execution"
         sh:minCount 1 ;
     ] ;
     sh:property [
@@ -573,8 +574,9 @@ pht:ExpectedFileDataSetShape
     a sh:NodeShape ;
     sh:targetClass pht:ExpectedFileDataSet ;
     sh:property [
-        sh:path pht:dataFormat ;
-        sh:name "Specifying the file format" ;
+        sh:path pht:fileType ;
+        sh:name "File Type"
+        sh:description "Specifying the expected file format with a MIME type" ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
         sh:maxCount 1 ;

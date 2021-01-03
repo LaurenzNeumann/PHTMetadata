@@ -194,7 +194,7 @@ pht:DataSetShape
         ) ;
     ] ;
     sh:property [
-        sh:path pht:characteristic ;
+        sh:path pht:dataSetCharacteristic ;
         sh:name "Data Set characteristic" ;
         sh:class dmop:DataSetCharacteristics ;
     ] ;
@@ -309,10 +309,11 @@ pht:TabularDataSetAttributeShape
 pht:FileDataSetShape
     rdf:type sh:NodeShape ;
     sh:targetClass pht:FileDataSet ;
-    sh:description "A Data set in a tabular form" ;
+    sh:description "A Data set in a form of one or more files" ;
     sh:property [
         sh:path pht:fileType ;
         sh:name "File type" ;
+        sh:description "The type of the file, expressed with a MIME type"
         sh:datatype xsd:string;
         sh:maxCount 1 ;
     ] ;

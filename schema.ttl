@@ -18,10 +18,15 @@ pht:attribute a rdf:Property ;
     rdfs:domain pht:TabularDataSet ;
     rdfs:range pht:TabularDataSetAttribute .
 
+# helper superclass for the certificate domain:
+pht:CertificateDomain rdfs:subClassOf rdfs:Class .
+
 pht:certificate a rdf:Property ;
-    rdfs:domain pht:Station,
-        pht:Train ;
+    rdfs:domain pht:CertificateDomain ;
     rdfs:range pht:Certificate .
+
+pht:Station rdf:subClassOf pht:CertificateDomain .
+pht:Train rdf:subClassOf pht:CertificateDomain .
 
 pht:certificateBegins a rdf:Property ;
     rdfs:domain pht:Certificate .
@@ -35,29 +40,40 @@ pht:certificateEnd a rdf:Property ;
 pht:certificateIssuer a rdf:Property ;
     rdfs:domain pht:Certificate .
 
-pht:characteristic a rdf:Property ;
-    rdfs:domain pht:DataSet,
-        pht:Model ;
-    rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlAlgorithmCharacteristic>,
-        <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlDataSetCharacteristics> .
+pht:modelCharacteristic  a rdf:Property ;
+    rdfs:domain pht:Model ;
+    rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlAlgorithmCharacteristic> .
+
+pht:dataSetCharacteristic a rdf:Property ;
+    rdfs:domain pht:DataSet ;
+    rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlDataSetCharacteristics> .
+
 
 pht:computationalEnvironment a rdf:Property ;
     rdfs:domain pht:Station ;
     rdfs:range pht:ComputationalEnvironment .
 
+# helper superclass for the creator property
+pht:CreatorDomain rdfs:subClassOf rdfs:Class .
+
 pht:creator a rdf:Property ;
-    rdfs:domain pht:Model,
-        pht:Station,
-        pht:Train,
-        pht:TrainExecution ;
+    rdfs:domain pht:CreatorDomain ;
     rdfs:range <http://xmlns.com/foaf/0.1/Agent> .
 
+pht:Station rdfs:subClassOf pht:CreatorDomain .
+pht:Train rdfs:subClassOf pht:CreatorDomain .
+pht:TrainExecution rdfs:subClassOf pht:CreatorDomain .
+pht:Model rdfs:subClassOf pht:CreatorDomain .
+
+# helper superclass for the dataformat property
+pht:DataFormatDomain rdfs:subClassOf rdfs:Class .
+
 pht:dataFormat a rdf:Property ;
-    rdfs:domain pht:ExpectedFileDataSet,
-        pht:ExpectedTabularDataSet,
-        pht:TabularDataSet ;
-    rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlDataFormat>,
-        pht:TabularDataSetAttribute .
+    rdfs:domain pht:DataFormatDomain ;
+    rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlDataFormat> .
+
+pht:ExpectedTabularDataSet rdfs:subClassOf pht:DataFormatDomain .
+pht:TabularDataSet rdfs:subClassOf pht:DataFormatDomain .
 
 pht:dataInteractionDelete a rdf:Property ;
     rdfs:domain pht:Model .
@@ -68,22 +84,32 @@ pht:dataInteractionRead a rdf:Property ;
 pht:dataInteractionWrite a rdf:Property ;
     rdfs:domain pht:Model .
 
+# helper subclass for data set
+pht:DataSetDomain rdfs:subClassOf rdfs:Class .
+
 pht:dataSet a rdf:Property ;
-    rdfs:domain pht:ExecutionPlanStep,
-        pht:Station .
+            rdfs:domain pht:DataSetDomain .
+    
+pht:ExecutionPlanStep rdfs:subClassOf pht:DataSetDomain .
+pht:Station rdfs:subClassOf pht:DataSetDomain .
 
 pht:dataType a rdf:Property ;
     rdfs:domain pht:TabularDataSetAttribute ;
     rdfs:range <http://www.e-lico.eu/ontologies/dmo/DMOP/DMKB.owlDataType> .
 
+# helper superclass for the description property:
+pht:DescriptionDomain rdfs:subClassOf rdfs:Class .
+
 pht:description a rdf:Property ;
-    rdfs:domain pht:DataSet,
-        pht:ExecutionPlanStep,
-        pht:Model,
-        pht:Station,
-        pht:TabularDataSetAttribute,
-        pht:Train,
-        pht:TrainExecution .
+    rdfs:domain pht:DescriptionDomain .
+    
+pht:DataSet rdfs:subClassOf pht:DescriptionDomain .
+pht:ExecutionPlanStep rdfs:subClassOf pht:DescriptionDomain .
+pht:Model rdfs:subClassOf pht:DescriptionDomain .
+pht:Station rdfs:subClassOf pht:DescriptionDomain .
+pht:TabularDataSetAttribute rdfs:subClassOf pht:DescriptionDomain .
+pht:Train rdfs:subClassOf pht:DescriptionDomain .
+pht:TrainExecution rdfs:subClassOf pht:DescriptionDomain .
 
 pht:dispatchingPattern a rdf:Property ;
     rdfs:domain pht:TrainExecution .
@@ -104,17 +130,26 @@ pht:execution a rdf:Property ;
 pht:expectedDataSet a rdf:Property ;
     rdfs:domain pht:Model .
 
+# helper superclass for the fileType property
+pht:FileTypeDomain rdfs:subClassOf rdfs:Class .
 pht:fileType a rdf:Property ;
-    rdfs:domain pht:FileDataSet,
-        pht:TabularDataSet .
+    rdfs:domain pht:FileTypeDomain .
+
+pht:FileDataSet rdfs:subClassOf pht:FileTypeDomain .
+pht:ExpectedFileDataSet rdfs:subClassOf pht:FileTypeDomain .
+pht:TabularDataSet rdfs:subClassOf pht:FileTypeDomain .
 
 pht:hasCUDASupport a rdf:Property ;
     rdfs:domain pht:ExecutionEnvironment .
 
+# helper superclass for the identifier property
+pht:IdentifierDomain rdfs:subClassOf rdfs:Class .
 pht:identifier a rdf:Property ;
-    rdfs:domain pht:Model,
-        pht:Train,
-        pht:TrainExecution .
+    rdfs:domain pht:IdentifierDomain .
+
+pht:Train rdfs:subClassOf pht:IdentifierDomain .
+pht:Model rdfs:subClassOf pht:IdentifierDomain .
+pht:TrainExecution rdfs:subClassOf pht:IdentifierDomain .
 
 pht:identifierToStation a rdf:Property ;
     rdfs:domain pht:DataSet .
@@ -125,10 +160,15 @@ pht:key a rdf:Property ;
 pht:latitude a rdf:Property ;
     rdfs:domain pht:Station .
 
+# helper superclass for the license property
+pht:LicenseDomain rdfs:subClassOf rdfs:Class .
+
 pht:license a rdf:Property ;
-    rdfs:domain pht:DataSet,
-        pht:Model ;
+    rdfs:domain pht:LicenseDomain ;
     rdfs:range <http://www.ebi.ac.uk/swo/SWO_0000002> .
+
+pht:DataSet rdfs:subClassOf pht:LicenseDomain .
+pht:Model rdfs:subClassOf pht:LicenseDomain .
 
 pht:longitude a rdf:Property ;
     rdfs:domain pht:Station .
@@ -139,27 +179,40 @@ pht:maximumModelSizeKilobytesSupported a rdf:Property ;
 pht:maximumNumberOfModelsSupported a rdf:Property ;
     rdfs:domain pht:ExecutionEnvironment .
 
+# helper superclass for the message property
+pht:MessageDomain rdfs:subClassOf rdfs:Class .
 pht:message a rdf:Property ;
-    rdfs:domain pht:StationErrorEvent,
-        pht:StationLogEvent,
-        pht:StationRejectedEvent .
+    rdfs:domain pht:MessageDomain .
+
+pht:StationErrorEvent rdfs:subClassOf pht:MessageDomain .
+pht:StationLogEvent rdfs:subClassOf pht:MessageDomain .
+pht:StationRejectedEvent rdfs:subClassOf pht:MessageDomain .
 
 pht:minimumEstimatedGFLOPS a rdf:Property ;
     rdfs:domain pht:Model .
 
+# helper superclass for the model property
+pht:ModelDomain rdfs:subClassOf rdfs:Class .
 pht:model a rdf:Property ;
-    rdfs:domain pht:ExecutionPlanStep,
-        pht:Train ;
+    rdfs:domain pht:ModelDomain  ;
     rdfs:range pht:Model .
+
+pht:ExecutionPlanStep rdfs:subClassOf pht:ModelDomain .
+pht:Train rdfs:subClassOf pht:ModelDomain .
 
 pht:needCUDASupport a rdf:Property ;
     rdfs:domain pht:Model .
 
+#helper superclass for the parameter property
+pht:DifferentialPrivacyMethod rdfs:subClassOf rdfs:Class .
+
 pht:parameter a rdf:Property ;
-    rdfs:domain pht:DifferentialPrivacyDifferentialPrivacy,
-        pht:DifferentialPrivacyKAnonymity,
-        pht:DifferentialPrivacyLDiversity,
-        pht:DifferentialPrivacyTCloseness .
+              rdfs:domain pht:DifferentialPrivacyMethod .
+    
+pht:DifferentialPrivacyDifferentialPrivacy rdfs:subClassOf pht:DifferentialPrivacyMethod .
+pht:DifferentialPrivacyKAnonymity rdfs:subClassOf pht:DifferentialPrivacyMethod .
+pht:DifferentialPrivacyLDiversity rdfs:subClassOf pht:DifferentialPrivacyMethod .
+pht:DifferentialPrivacyTCloseness rdfs:subClassOf pht:DifferentialPrivacyMethod .
 
 pht:plannedRouteStep a rdf:Property ;
     rdfs:domain pht:TrainExecution ;
@@ -187,9 +240,14 @@ pht:responsibleForStation a rdf:Property ;
     rdfs:domain pht:Station ;
     rdfs:range <http://xmlns.com/foaf/0.1/Agent> .
 
+#helper superclass for the right property
+pht:RightDomain rdfs:subClassOf rdfs:Class .
+
 pht:right a rdf:Property ;
-    rdfs:domain pht:DataSet,
-        pht:Station .
+    rdfs:domain pht:RightDomain .
+
+pht:DataSet rdfs:subClassOf pht:RightDomain .
+pht:Station rdfs:subClassOf pht:RightDomain .
 
 pht:size a rdf:Property ;
     rdfs:domain pht:Model .
@@ -200,18 +258,23 @@ pht:source a rdf:Property ;
 pht:state a rdf:Property ;
     rdfs:domain pht:TrainExecution .
 
+# helper superclass for the station property
+pht:StationDomain rdfs:subClassOf rdfs:Class .
+
 pht:station a rdf:Property ;
-    rdfs:domain pht:CPUUsageReportEvent,
-        pht:ExecutionPlanStep,
-        pht:FinishedRunningAtStationEvent,
-        pht:FinishedTransmissionEvent,
-        pht:MemoryUsageReportEvent,
-        pht:StartedRunningEvent,
-        pht:StartedTransmissionEvent,
-        pht:StationErrorEvent,
-        pht:StationLogEvent,
-        pht:StationRejectedEvent ;
+    rdfs:domain pht:StationDomain ;
     rdfs:range pht:Station .
+
+pht:CPUUsageReportEvent rdfs:subClassOf pht:StationDomain .
+pht:ExecutionPlanStep rdfs:subClassOf pht:StationDomain .
+pht:FinishedRunningAtStationEvent rdfs:subClassOf pht:StationDomain .
+pht:FinishedTransmissionEvent rdfs:subClassOf pht:StationDomain .
+pht:MemoryUsageReportEvent rdfs:subClassOf pht:StationDomain .
+pht:StartedRunningEvent rdfs:subClassOf pht:StationDomain .
+pht:StartedTransmissionEvent rdfs:subClassOf pht:StationDomain .
+pht:StationErrorEvent rdfs:subClassOf pht:StationDomain .
+pht:StationLogEvent rdfs:subClassOf pht:StationDomain .
+pht:StationRejectedEvent rdfs:subClassOf pht:StationDomain .
 
 pht:stepNumber a rdf:Property ;
     rdfs:domain pht:ExecutionPlanStep .
@@ -222,17 +285,27 @@ pht:success a rdf:Property ;
 pht:supportsOCI a rdf:Property ;
     rdfs:domain pht:ExecutionEnvironment .
 
+# helper superclass for the theme property
+pht:ThemeDomain rdfs:subClassOf rdfs:Class .
+
 pht:theme a rdf:Property ;
-    rdfs:domain pht:DataSet,
-        pht:TabularDataSetAttribute ;
+    rdfs:domain pht:ThemeDomain ;
     rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
+
+pht:DataSet rdfs:subClassOf pht:ThemeDomain .
+pht:TabularDataSetAttribute rdfs:subClassOf pht:ThemeDomain .
 
 pht:timestamp a rdf:Property ;
     rdfs:domain pht:ExecutionEvent .
 
+# helper superclass for the title property
+pht:TitleDomain rdfs:subClassOf rdfs:Class .
+
 pht:title a rdf:Property ;
-    rdfs:domain pht:Station,
-        pht:Train .
+    rdfs:domain pht:TitleDomain .
+
+pht:Station rdfs:subClassOf pht:TitleDomain .
+pht:Train rdfs:subClassOf pht:TitleDomain .
 
 pht:trainId a rdf:Property ;
     rdfs:domain pht:TrainExecution .
@@ -243,9 +316,14 @@ pht:usedAccessProtocol a rdf:Property ;
 pht:usedDifferentialPrivacy a rdf:Property ;
     rdfs:domain pht:DataSet .
 
+# helper class for the value property
+pht:ValueDomain rdfs:subClassOf rdfs:Class .
+
 pht:value a rdf:Property ;
-    rdfs:domain pht:CPUUsageReportEvent,
-        pht:MemoryUsageReportEvent .
+    rdfs:domain pht:ValueDomain .
+
+pht:CPUUsageReportEvent rdfs:subClassOf pht:ValueDomain .
+pht:MemoryUsageReportEvent rdfs:subClassOf pht:ValueDomain .
 
 pht:version a rdf:Property ;
     rdfs:domain pht:Train .
