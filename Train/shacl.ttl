@@ -242,7 +242,7 @@ pht:TrainExecutionShape
     sh:property [
         sh:path pht:identifier ;
         sh:name "Execution identifier" ;
-        sh:description "An identifier for this execution"
+        sh:description "An identifier for this execution" ;
         sh:minCount 1 ;
     ] ;
     sh:property [
@@ -575,7 +575,7 @@ pht:ExpectedFileDataSetShape
     sh:targetClass pht:ExpectedFileDataSet ;
     sh:property [
         sh:path pht:fileType ;
-        sh:name "File Type"
+        sh:name "File Type" ;
         sh:description "Specifying the expected file format with a MIME type" ;
         sh:datatype xsd:string ;
         sh:minCount 0 ;
