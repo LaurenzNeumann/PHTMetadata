@@ -313,7 +313,7 @@ pht:FileDataSetShape
     sh:property [
         sh:path pht:fileType ;
         sh:name "File type" ;
-        sh:description "The type of the file, expressed with a MIME type"
+        sh:description "The type of the file, expressed with a MIME type" ;
         sh:datatype xsd:string;
         sh:maxCount 1 ;
     ] ;
