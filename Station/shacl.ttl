@@ -151,6 +151,11 @@ pht:DataSetShape
         sh:class skos:Concept ;
     ] ;
     sh:property [
+        sh:path pht:pid ;
+        sh:name "Identifier of the dataset" ;
+        sh:description "This attribute can be used to persistently and globally identify the provided dataset, allowing additional references about domain-specific metadata descriptions." ;
+    ] ;
+    sh:property [
         sh:path pht:license ;
         sh:name "License" ;
         # SWO has a weird naming scheme:

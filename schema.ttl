@@ -316,6 +316,9 @@ pht:usedAccessProtocol a rdf:Property ;
 pht:usedDifferentialPrivacy a rdf:Property ;
     rdfs:domain pht:DataSet .
 
+pht:pid a rdf:Property ;
+    rdfs:domain pht:DataSet .
+
 # helper class for the value property
 pht:ValueDomain rdfs:subClassOf rdfs:Class .
 
@@ -381,5 +384,4 @@ pht:Train rdfs:subClassOf rdfs:Class .
 pht:TrainExecution rdfs:subClassOf rdfs:Class .
 
 pht:Model rdfs:subClassOf rdfs:Class .
-
 
