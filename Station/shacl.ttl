@@ -15,8 +15,8 @@ pht:StationShape
     sh:targetClass pht:Station ;
     sh:description "A station providing data for the PHT" ;
     sh:property [
-        sh:path pht:creator ;
-        sh:name "Train Creator" ;
+        sh:path pht:stationOwner ;
+        sh:name "Owner of the station" ;
         sh:class foaf:Agent ;
         sh:minCount 1 ;
     ] ;

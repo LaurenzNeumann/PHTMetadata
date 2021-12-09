@@ -139,8 +139,8 @@ pht:ModelShape
         sh:minCount 1 ;
     ] ;
     sh:property [
-        sh:path pht:description ;
-        sh:name "Model rights" ;
+        sh:path pht:right ;
+        sh:name "Legal information about the model" ;
         sh:datatype xsd:string ;
     ] ;
     sh:property [
