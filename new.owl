@@ -66,7 +66,7 @@
 
 ###  http://metadataschema.pht.de#eventEmittedDuring
 :eventEmittedDuring rdf:type owl:ObjectProperty ;
-                    rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ;
+                    rdfs:domain :TripEvent ;
                     rdfs:range :Trip .
 
 
@@ -146,13 +146,13 @@
 ###  http://metadataschema.pht.de#cpuUsagePercent
 :cpuUsagePercent rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
-                 rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent> ;
+                 rdfs:domain :CPUUsageReportEvent ;
                  rdfs:range xsd:integer .
 
 
 ###  http://metadataschema.pht.de#eventTimestamp
 :eventTimestamp rdf:type owl:DatatypeProperty ;
-                rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ;
+                rdfs:domain :TripEvent ;
                 rdfs:range xsd:dateTimeStamp .
 
 
@@ -165,14 +165,14 @@
 ###  http://metadataschema.pht.de#logMessage
 :logMessage rdf:type owl:DatatypeProperty ;
             rdfs:subPropertyOf owl:topDataProperty ;
-            rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent> ;
+            rdfs:domain :StationLogEvent ;
             rdfs:range xsd:string .
 
 
 ###  http://metadataschema.pht.de#memoryUsageByte
 :memoryUsageByte rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf owl:topDataProperty ;
-                 rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent> ;
+                 rdfs:domain :MemoryUsageReportEvent ;
                  rdfs:range xsd:integer .
 
 
@@ -186,7 +186,7 @@
 ###  http://metadataschema.pht.de#rejectMessageHumanReadable
 :rejectMessageHumanReadable rdf:type owl:DatatypeProperty ;
                             rdfs:subPropertyOf owl:topDataProperty ;
-                            rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent> ;
+                            rdfs:domain :StationRejectedEvent ;
                             rdfs:range xsd:string .
 
 
@@ -199,6 +199,11 @@
 #################################################################
 #    Classes
 #################################################################
+
+###  http://metadataschema.pht.de#CPUUsageReportEvent
+:CPUUsageReportEvent rdf:type owl:Class ;
+                     rdfs:subClassOf :StationRelatedTripEvent .
+
 
 ###  http://metadataschema.pht.de#DataInterface
 :DataInterface rdf:type owl:Class ;
@@ -236,6 +241,16 @@
                       rdfs:comment "Describes the environment of a station in which trains can be executed."@en .
 
 
+###  http://metadataschema.pht.de#FinishedRunningAtStationEvent
+:FinishedRunningAtStationEvent rdf:type owl:Class ;
+                               rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  http://metadataschema.pht.de#FinishedTransmissionEvent
+:FinishedTransmissionEvent rdf:type owl:Class ;
+                           rdfs:subClassOf :StationRelatedTripEvent .
+
+
 ###  http://metadataschema.pht.de#Format
 :Format rdf:type owl:Class ;
         rdfs:subClassOf :PHTConcept ;
@@ -254,6 +269,11 @@
                     rdfs:subClassOf :DataInterface ;
                     owl:disjointWith :NetworkInterface ;
                     rdfs:comment "Describes an Interface which is made available to the train via a local file path."@en .
+
+
+###  http://metadataschema.pht.de#MemoryUsageReportEvent
+:MemoryUsageReportEvent rdf:type owl:Class ;
+                        rdfs:subClassOf :StationRelatedTripEvent .
 
 
 ###  http://metadataschema.pht.de#NetworkInterface
@@ -294,6 +314,16 @@
                    rdfs:subClassOf :PlannedHalt .
 
 
+###  http://metadataschema.pht.de#StartedRunningEvent
+:StartedRunningEvent rdf:type owl:Class ;
+                     rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  http://metadataschema.pht.de#StartedTransmissionEvent
+:StartedTransmissionEvent rdf:type owl:Class ;
+                          rdfs:subClassOf :TripEvent .
+
+
 ###  http://metadataschema.pht.de#State
 :State rdf:type owl:Class ;
        rdfs:subClassOf :PHTConcept ;
@@ -306,9 +336,24 @@
                          :UserOwned .
 
 
+###  http://metadataschema.pht.de#StationErrorEvent
+:StationErrorEvent rdf:type owl:Class ;
+                   rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  http://metadataschema.pht.de#StationLogEvent
+:StationLogEvent rdf:type owl:Class ;
+                 rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  http://metadataschema.pht.de#StationRejectedEvent
+:StationRejectedEvent rdf:type owl:Class ;
+                      rdfs:subClassOf :StationRelatedTripEvent .
+
+
 ###  http://metadataschema.pht.de#StationRelatedTripEvent
 :StationRelatedTripEvent rdf:type owl:Class ;
-                         rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ,
+                         rdfs:subClassOf :TripEvent ,
                                          [ rdf:type owl:Restriction ;
                                            owl:onProperty :eventEmittedByStation ;
                                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
@@ -332,6 +377,11 @@
                 rdfs:subClassOf :PHTConcept .
 
 
+###  http://metadataschema.pht.de#TrainIstantiatedEvent
+:TrainIstantiatedEvent rdf:type owl:Class ;
+                       rdfs:subClassOf :TripEvent .
+
+
 ###  http://metadataschema.pht.de#TrainStore
 :TrainStore rdf:type owl:Class ;
             rdfs:subClassOf :PHTConcept ;
@@ -348,6 +398,22 @@
 :Trip rdf:type owl:Class ;
       rdfs:subClassOf :PHTConcept ;
       rdfs:comment "An execution of a Train. Consists of multiple Visits of stations" .
+
+
+###  http://metadataschema.pht.de#TripEvent
+:TripEvent rdf:type owl:Class ;
+           rdfs:subClassOf :PHTConcept ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :eventEmittedDuring ;
+                             owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onClass :Trip
+                           ] ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :eventTimestamp ;
+                             owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                             owl:onDataRange xsd:dateTimeStamp
+                           ] ;
+           rdfs:comment "An event which is emitted during a Trip of a Train. Can contain various information."@en .
 
 
 ###  http://metadataschema.pht.de#UserOwned
@@ -367,72 +433,6 @@ owl:Thing rdfs:comment "" .
 
 ###  http://xmlns.com/foaf/0.1/Organization
 <http://xmlns.com/foaf/0.1/Organization> rdf:type owl:Class .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent> rdf:type owl:Class ;
-                                                                    rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent> rdf:type owl:Class ;
-                                                                              rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent> rdf:type owl:Class ;
-                                                                          rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent> rdf:type owl:Class ;
-                                                                       rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent> rdf:type owl:Class ;
-                                                                    rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent> rdf:type owl:Class ;
-                                                                         rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent> rdf:type owl:Class ;
-                                                                  rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent> rdf:type owl:Class ;
-                                                                rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent> rdf:type owl:Class ;
-                                                                     rdfs:subClassOf :StationRelatedTripEvent .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent> rdf:type owl:Class ;
-                                                                      rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> .
-
-
-###  https://github.com/LaurenzNeumann/PHTMetadata#TripEvent
-<https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> rdf:type owl:Class ;
-                                                          rdfs:subClassOf :PHTConcept ,
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty :eventEmittedDuring ;
-                                                                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                            owl:onClass :Trip
-                                                                          ] ,
-                                                                          [ rdf:type owl:Restriction ;
-                                                                            owl:onProperty :eventTimestamp ;
-                                                                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                                                                            owl:onDataRange xsd:dateTimeStamp
-                                                                          ] ;
-                                                          rdfs:comment "An event which is emitted during a Trip of a Train. Can contain various information."@en .
 
 
 #################################################################
@@ -459,6 +459,21 @@ owl:Thing rdfs:comment "" .
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :CPUUsageReportEvent
+                :FinishedRunningAtStationEvent
+                :FinishedTransmissionEvent
+                :MemoryUsageReportEvent
+                :StartedRunningEvent
+                :StartedTransmissionEvent
+                :StationErrorEvent
+                :StationLogEvent
+                :StationRejectedEvent
+                :TrainIstantiatedEvent
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
   owl:members ( :DataInterfaceShape
                 :Dataset
                 :Format
@@ -468,8 +483,8 @@ owl:Thing rdfs:comment "" .
                 :Train
                 :TrainStore
                 :Trip
+                :TripEvent
                 :Visit
-                <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent>
               )
 ] .
 
@@ -490,23 +505,8 @@ owl:Thing rdfs:comment "" .
                 :Train
                 :TrainStore
                 :Trip
+                :TripEvent
                 :Visit
-                <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent>
-              )
-] .
-
-
-[ rdf:type owl:AllDisjointClasses ;
-  owl:members ( <https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent>
-                <https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent>
               )
 ] .
 
