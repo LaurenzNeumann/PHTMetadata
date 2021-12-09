@@ -1,0 +1,514 @@
+@prefix : <http://metadataschema.pht.de#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://metadataschema.pht.de> .
+
+<http://metadataschema.pht.de> rdf:type owl:Ontology ;
+                                owl:imports <http://xmlns.com/foaf/0.1/> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://metadataschema.pht.de#accessThorughInterface
+:accessThorughInterface rdf:type owl:ObjectProperty ;
+                        owl:inverseOf :providesDataAccessTo ;
+                        rdfs:domain :Dataset ;
+                        rdfs:range :DataInterface ;
+                        rdfs:comment "Connects a Data set to an interface through which it can be accessed."@en .
+
+
+###  http://metadataschema.pht.de#associatedWithStore
+:associatedWithStore rdf:type owl:ObjectProperty ;
+                     rdfs:domain :Station ;
+                     rdfs:range :TrainStore .
+
+
+###  http://metadataschema.pht.de#byTrain
+:byTrain rdf:type owl:ObjectProperty ;
+         rdfs:domain :Trip ;
+         rdfs:range :Train ;
+         rdfs:comment "Connects the Trip (Execution) of a Train to the Train itself."@en .
+
+
+###  http://metadataschema.pht.de#consistsOfHalt
+:consistsOfHalt rdf:type owl:ObjectProperty ;
+                rdfs:domain :PlannedParallelHalt ;
+                rdfs:range :PlannedSingleHalt .
+
+
+###  http://metadataschema.pht.de#emittedEvent
+:emittedEvent rdf:type owl:ObjectProperty ;
+              owl:inverseOf :eventEmittedDuring .
+
+
+###  http://metadataschema.pht.de#environmentSupportsFormat
+:environmentSupportsFormat rdf:type owl:ObjectProperty ;
+                           rdfs:subPropertyOf owl:topObjectProperty ;
+                           rdfs:comment "Describes that an Environment (S) supports a Format of a Train (O)"@en .
+
+
+###  http://metadataschema.pht.de#eventEmittedByEntity
+:eventEmittedByEntity rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:comment "Describes that an TripEvent was emitted by an Entity of the PHT architecture."@en .
+
+
+###  http://metadataschema.pht.de#eventEmittedByStation
+:eventEmittedByStation rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf :eventEmittedByEntity ;
+                       rdfs:domain :StationRelatedTripEvent ;
+                       rdfs:range :Station .
+
+
+###  http://metadataschema.pht.de#eventEmittedDuring
+:eventEmittedDuring rdf:type owl:ObjectProperty ;
+                    rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ;
+                    rdfs:range :Trip .
+
+
+###  http://metadataschema.pht.de#fulfilledBy
+:fulfilledBy rdf:type owl:ObjectProperty ;
+             rdfs:domain :PlannedSingleHalt ;
+             rdfs:range :Visit ;
+             rdfs:comment "Describes that a PlannedHalt was fulfilled by a visit."@en .
+
+
+###  http://metadataschema.pht.de#haltAtStation
+:haltAtStation rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :PlannedSingleHalt ;
+               rdfs:range :Station .
+
+
+###  http://metadataschema.pht.de#hasInterfaceShape
+:hasInterfaceShape rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :DataInterface ;
+                   rdfs:range :DataInterfaceShape ;
+                   rdfs:comment "Connects a DataInterface to a Shape which describes it."@en .
+
+
+###  http://metadataschema.pht.de#isStoredByStoreType
+:isStoredByStoreType rdf:type owl:ObjectProperty ;
+                     owl:inverseOf :storesFormat ;
+                     rdfs:domain :Format ;
+                     rdfs:range :TrainStore ;
+                     rdfs:comment "Describes what kind of stores can store this Format."@en .
+
+
+###  http://metadataschema.pht.de#providesDataAccessTo
+:providesDataAccessTo rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf owl:topObjectProperty ;
+                      rdfs:domain :DataInterface ;
+                      rdfs:range :Dataset .
+
+
+###  http://metadataschema.pht.de#responsibleOrganization
+:responsibleOrganization rdf:type owl:ObjectProperty ;
+                         rdfs:domain :UserOwned ;
+                         rdfs:range <http://xmlns.com/foaf/0.1/Organization> .
+
+
+###  http://metadataschema.pht.de#stateFormat
+:stateFormat rdf:type owl:ObjectProperty ;
+             rdfs:domain :State ;
+             rdfs:range :Format ;
+             rdfs:comment "Describes the Format of a State."@en .
+
+
+###  http://metadataschema.pht.de#storeInterfaceProvidesFormat
+:storeInterfaceProvidesFormat rdf:type owl:ObjectProperty ;
+                              rdfs:subPropertyOf owl:topObjectProperty ;
+                              rdfs:domain :TrainStoreInterface ;
+                              rdfs:range :Format ;
+                              rdfs:comment "Describes that a TrainStore interface (S) provides a special Format of Trains (O)."@en .
+
+
+###  http://metadataschema.pht.de#storesFormat
+:storesFormat rdf:type owl:ObjectProperty .
+
+
+###  http://metadataschema.pht.de#yieldedState
+:yieldedState rdf:type owl:ObjectProperty ;
+              rdfs:domain :Visit ;
+              rdfs:range :State ;
+              rdfs:comment "Connects a Visit at a Station by a Train to the new State of the Train in the Trip yielded by this Visit."@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://metadataschema.pht.de#cpuUsagePercent
+:cpuUsagePercent rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent> ;
+                 rdfs:range xsd:integer .
+
+
+###  http://metadataschema.pht.de#eventTimestamp
+:eventTimestamp rdf:type owl:DatatypeProperty ;
+                rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ;
+                rdfs:range xsd:dateTimeStamp .
+
+
+###  http://metadataschema.pht.de#localFileInterfacePath
+:localFileInterfacePath rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf owl:topDataProperty ;
+                        rdfs:comment "Describes a local file path. Has to be absolut. Currently only UNIX like file pathes."@en .
+
+
+###  http://metadataschema.pht.de#logMessage
+:logMessage rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf owl:topDataProperty ;
+            rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent> ;
+            rdfs:range xsd:string .
+
+
+###  http://metadataschema.pht.de#memoryUsageByte
+:memoryUsageByte rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent> ;
+                 rdfs:range xsd:integer .
+
+
+###  http://metadataschema.pht.de#networkInterfaceAdress
+:networkInterfaceAdress rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :NetworkInterface ;
+                        rdfs:range xsd:string ;
+                        rdfs:comment "The network adress or url of a network interface. Can be an URI or IP adress. Has to be as qualified as possible, so that in the best case, the train can use this value directly."@en .
+
+
+###  http://metadataschema.pht.de#rejectMessageHumanReadable
+:rejectMessageHumanReadable rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf owl:topDataProperty ;
+                            rdfs:domain <https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent> ;
+                            rdfs:range xsd:string .
+
+
+###  http://metadataschema.pht.de#skippable
+:skippable rdf:type owl:DatatypeProperty ;
+           rdfs:domain :PlannedHalt ;
+           rdfs:range xsd:boolean .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://metadataschema.pht.de#DataInterface
+:DataInterface rdf:type owl:Class ;
+               rdfs:subClassOf :PHTConcept ;
+               rdfs:comment "Describes the Interface at a Station through which data can be accessed."@en ,
+                            "Describes the actual Interface. The Form of the Interface is described by the connected DataInterfaceShape object."@en ;
+               rdfs:seeAlso :DataInterfaceShape .
+
+
+###  http://metadataschema.pht.de#DataInterfaceShape
+:DataInterfaceShape rdf:type owl:Class ;
+                    rdfs:subClassOf :PHTConcept ;
+                    rdfs:comment "Describes the shape of an Interface at a station through which data can be accessed."@en .
+
+
+###  http://metadataschema.pht.de#Dataset
+:Dataset rdf:type owl:Class ;
+         rdfs:subClassOf :PHTConcept ;
+         rdfs:comment "A data set of a station to which the station provides access through an interface for trains."@en .
+
+
+###  http://metadataschema.pht.de#DockerMaxSizeConstrain
+:DockerMaxSizeConstrain rdf:type owl:Class ;
+                        rdfs:subClassOf :TrainConstrain .
+
+
+###  http://metadataschema.pht.de#EstimatedComputationalPowerConstrain
+:EstimatedComputationalPowerConstrain rdf:type owl:Class ;
+                                      rdfs:subClassOf :TrainConstrain .
+
+
+###  http://metadataschema.pht.de#ExecutionEnvironment
+:ExecutionEnvironment rdf:type owl:Class ;
+                      rdfs:subClassOf :PHTConcept ;
+                      rdfs:comment "Describes the environment of a station in which trains can be executed."@en .
+
+
+###  http://metadataschema.pht.de#Format
+:Format rdf:type owl:Class ;
+        rdfs:subClassOf :PHTConcept ;
+        rdfs:comment "Class describing the Format of a Train."@en ,
+                     "Multiple Instances of this classes are shipped. It should not be necessary to instantiate this class, since then we would have non standardised Formats."@en .
+
+
+###  http://metadataschema.pht.de#InternetAccessConstrain
+:InternetAccessConstrain rdf:type owl:Class ;
+                         rdfs:subClassOf :TrainConstrain ;
+                         rdfs:comment "Describes a constrain which states if a train needs access to the internet." .
+
+
+###  http://metadataschema.pht.de#LocalFileInterface
+:LocalFileInterface rdf:type owl:Class ;
+                    rdfs:subClassOf :DataInterface ;
+                    owl:disjointWith :NetworkInterface ;
+                    rdfs:comment "Describes an Interface which is made available to the train via a local file path."@en .
+
+
+###  http://metadataschema.pht.de#NetworkInterface
+:NetworkInterface rdf:type owl:Class ;
+                  rdfs:subClassOf :DataInterface ,
+                                  [ rdf:type owl:Restriction ;
+                                    owl:onProperty :networkInterfaceAdress ;
+                                    owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                    owl:onDataRange xsd:string
+                                  ] ;
+                  rdfs:comment "A Data Interface which is accessed over the network in the Station"@en .
+
+
+###  http://metadataschema.pht.de#PHTConcept
+:PHTConcept rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing .
+
+
+###  http://metadataschema.pht.de#PlannedHalt
+:PlannedHalt rdf:type owl:Class ;
+             rdfs:subClassOf :PHTConcept ;
+             rdfs:comment "A single step in the Trip of the Train. Describes a plan of a visit at a station. Can be fulfilled by a visit." .
+
+
+###  http://metadataschema.pht.de#PlannedParallelHalt
+:PlannedParallelHalt rdf:type owl:Class ;
+                     rdfs:subClassOf :PlannedHalt ,
+                                     [ rdf:type owl:Restriction ;
+                                       owl:onProperty :consistsOfHalt ;
+                                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                       owl:onClass :PlannedSingleHalt
+                                     ] ;
+                     owl:disjointWith :PlannedSingleHalt .
+
+
+###  http://metadataschema.pht.de#PlannedSingleHalt
+:PlannedSingleHalt rdf:type owl:Class ;
+                   rdfs:subClassOf :PlannedHalt .
+
+
+###  http://metadataschema.pht.de#State
+:State rdf:type owl:Class ;
+       rdfs:subClassOf :PHTConcept ;
+       rdfs:comment "This class describes a state of a train. A state of a train captures the state of the filesystem. If the filesystem changes, the state is not the same anymore. Therefore, an execution of a train at at station can be considered as a transformation from one state to another." .
+
+
+###  http://metadataschema.pht.de#Station
+:Station rdf:type owl:Class ;
+         rdfs:subClassOf :PHTConcept ,
+                         :UserOwned .
+
+
+###  http://metadataschema.pht.de#StationRelatedTripEvent
+:StationRelatedTripEvent rdf:type owl:Class ;
+                         rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> ,
+                                         [ rdf:type owl:Restriction ;
+                                           owl:onProperty :eventEmittedByStation ;
+                                           owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                           owl:onClass :Station
+                                         ] .
+
+
+###  http://metadataschema.pht.de#TabularDataInterfaceShape
+:TabularDataInterfaceShape rdf:type owl:Class ;
+                           rdfs:subClassOf :DataInterfaceShape .
+
+
+###  http://metadataschema.pht.de#Train
+:Train rdf:type owl:Class ;
+       rdfs:subClassOf :PHTConcept ,
+                       :UserOwned .
+
+
+###  http://metadataschema.pht.de#TrainConstrain
+:TrainConstrain rdf:type owl:Class ;
+                rdfs:subClassOf :PHTConcept .
+
+
+###  http://metadataschema.pht.de#TrainStore
+:TrainStore rdf:type owl:Class ;
+            rdfs:subClassOf :PHTConcept ;
+            rdfs:comment "An abstract class describing an entity which stores trains and provides interfaces for retrieving those." .
+
+
+###  http://metadataschema.pht.de#TrainStoreInterface
+:TrainStoreInterface rdf:type owl:Class ;
+                     rdfs:subClassOf :PHTConcept ;
+                     rdfs:comment "An interface of a Train Store to retrieve Trains."@en .
+
+
+###  http://metadataschema.pht.de#Trip
+:Trip rdf:type owl:Class ;
+      rdfs:subClassOf :PHTConcept ;
+      rdfs:comment "An execution of a Train. Consists of multiple Visits of stations" .
+
+
+###  http://metadataschema.pht.de#UserOwned
+:UserOwned rdf:type owl:Class ;
+           rdfs:subClassOf :PHTConcept .
+
+
+###  http://metadataschema.pht.de#Visit
+:Visit rdf:type owl:Class ;
+       rdfs:subClassOf :PHTConcept ;
+       rdfs:comment "Describes a single visit of a train during a trip at a station." .
+
+
+###  http://www.w3.org/2002/07/owl#Thing
+owl:Thing rdfs:comment "" .
+
+
+###  http://xmlns.com/foaf/0.1/Organization
+<http://xmlns.com/foaf/0.1/Organization> rdf:type owl:Class .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent> rdf:type owl:Class ;
+                                                                              rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent> rdf:type owl:Class ;
+                                                                          rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent> rdf:type owl:Class ;
+                                                                       rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent> rdf:type owl:Class ;
+                                                                         rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent> rdf:type owl:Class ;
+                                                                  rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent> rdf:type owl:Class ;
+                                                                rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent> rdf:type owl:Class ;
+                                                                     rdfs:subClassOf :StationRelatedTripEvent .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent> rdf:type owl:Class ;
+                                                                      rdfs:subClassOf <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> .
+
+
+###  https://github.com/LaurenzNeumann/PHTMetadata#TripEvent
+<https://github.com/LaurenzNeumann/PHTMetadata#TripEvent> rdf:type owl:Class ;
+                                                          rdfs:subClassOf :PHTConcept ,
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty :eventEmittedDuring ;
+                                                                            owl:maxQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                            owl:onClass :Trip
+                                                                          ] ,
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty :eventTimestamp ;
+                                                                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                                                            owl:onDataRange xsd:dateTimeStamp
+                                                                          ] ;
+                                                          rdfs:comment "An event which is emitted during a Trip of a Train. Can contain various information."@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://metadataschema.pht.de#DockerFormat
+:DockerFormat rdf:type owl:NamedIndividual ,
+                       :Format .
+
+
+###  http://metadataschema.pht.de#FullInternetAccessConstrain
+:FullInternetAccessConstrain rdf:type owl:NamedIndividual ,
+                                      :InternetAccessConstrain .
+
+
+###  http://metadataschema.pht.de#NoInternetAccessConstrain
+:NoInternetAccessConstrain rdf:type owl:NamedIndividual ,
+                                    :InternetAccessConstrain .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DataInterfaceShape
+                :Dataset
+                :Format
+                :PlannedHalt
+                :State
+                :Station
+                :Train
+                :TrainStore
+                :Trip
+                :Visit
+                <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent>
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :DockerMaxSizeConstrain
+                :EstimatedComputationalPowerConstrain
+                :InternetAccessConstrain
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Format
+                :PlannedHalt
+                :State
+                :Station
+                :Train
+                :TrainStore
+                :Trip
+                :Visit
+                <https://github.com/LaurenzNeumann/PHTMetadata#TripEvent>
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( <https://github.com/LaurenzNeumann/PHTMetadata#CPUUsageReportEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#FinishedRunningAtStationEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#FinishedTransmissionEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#MemoryUsageReportEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#StartedRunningEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#StartedTransmissionEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#StationErrorEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#StationLogEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#StationRejectedEvent>
+                <https://github.com/LaurenzNeumann/PHTMetadata#TrainIstantiatedEvent>
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
